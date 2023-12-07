@@ -1,0 +1,13 @@
+{
+  "name": "tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "2.globals.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node stream.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
