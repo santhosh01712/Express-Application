@@ -1,0 +1,39 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const authRoutes = require("./routes/authRoutes");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const { requireAuth, checkUser } = require("./midddleware/authmiddleware");
+
+const app = express();
+
+// middleware
+app.use(express.static("public"));
+app.use(express.json());
+app.use(cookieParser());
+
+// view engine
+app.set("view engine", "ejs");
+
+const dbURI =
+  "mongodb+srv://santhosh:new123@cluster-santhosh.ztelrbu.mongodb.net/userdata?retryWrites=true&w=majority";
+mongoose
+  .connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then((result) => {
+    console.log("Database connection success");
+    app.listen(3000, () => {
+      console.log("App is listening to port 3000");
+    });
+  })
+  .catch((err) => console.log(err));
+
+// routes
+app.get("*", checkUser);
+app.get("/", (req, res) => res.render("home"));
+
+app.get("/smoothies", requireAuth, (req, res) => res.render("smoothies"));
+app.use(authRoutes);
