@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+require("dotenv").config();
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, "santhosh secret", (err, decodedToken) => {
+    jwt.verify(token, process.env.jwtsecret, (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.redirect("/login");
@@ -23,7 +24,7 @@ const requireAuth = (req, res, next) => {
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
 
-  jwt.verify(token, "santhosh secret", async (err, decodedToken) => {
+  jwt.verify(token, process.env.jwtsecret, async (err, decodedToken) => {
     if (err) {
       res.locals.user = null;
       next();

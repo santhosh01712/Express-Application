@@ -3,9 +3,9 @@ const app = express();
 const products = require("./routes/products/products");
 const blogs = require("./routes/blogs/blogs");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-const dbURI =
-  "mongodb+srv://santhosh:new123@cluster-santhosh.ztelrbu.mongodb.net/blogs-app?retryWrites=true&w=majority";
+const dbURI = process.env.dbURI;
 
 mongoose
   .connect(dbURI)

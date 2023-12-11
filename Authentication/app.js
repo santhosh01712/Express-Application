@@ -4,6 +4,7 @@ const authRoutes = require("./routes/authRoutes");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const { requireAuth, checkUser } = require("./midddleware/authmiddleware");
+require("dotenv").config();
 
 const app = express();
 
@@ -15,8 +16,7 @@ app.use(cookieParser());
 // view engine
 app.set("view engine", "ejs");
 
-const dbURI =
-  "mongodb+srv://santhosh:new123@cluster-santhosh.ztelrbu.mongodb.net/userdata?retryWrites=true&w=majority";
+const dbURI = process.env.dbURI;
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
